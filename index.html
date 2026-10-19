@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Texto en una línea — Conversor rápido y limpio</title>
+  <meta name="description" content="Herramienta online para convertir texto de múltiples líneas en una sola línea con separadores personalizados, eliminación de espacios y copia rápida.">
+  <meta name="theme-color" content="#0f6b78" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101a1c" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f6b78' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <h1>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="15" y2="12"></line>
+            <polyline points="15 9 18 12 15 15"></polyline>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          Texto en una línea
+        </h1>
+        <p>Pega tu texto multilinea y cópialo en una sola línea al instante.</p>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Cambiar tema">
+          <!-- Icono inyectado dinámicamente vía TypeScript -->
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Sección Entrada -->
+      <section class="card">
+        <div class="section-label">
+          <label for="entrada">Texto original</label>
+          <span class="stats-badge" id="stats-entrada" aria-live="polite">0 líneas • 0 car.</span>
+        </div>
+        <textarea
+          id="entrada"
+          placeholder="Pega aquí tu lista, código, párrafos o texto con varias líneas..."
+          autofocus
+          spellcheck="false"
+        ></textarea>
+        
+        <div class="quick-helpers">
+          <button id="ejemplo" class="pill-btn" type="button">Cargar texto de ejemplo</button>
+        </div>
+      </section>
+
+      <!-- Opciones y separadores -->
+      <section class="options-bar" aria-label="Opciones de formato">
+        <div class="options-row">
+          <div class="select-group">
+            <label for="sep">Unir con:</label>
+            <select id="sep">
+              <option value="" selected>Nada (sin separador)</option>
+              <option value=" ">Espacio (" ")</option>
+              <option value=", ">Coma y espacio (", ")</option>
+              <option value=",">Coma simple (",")</option>
+              <option value="; ">Punto y coma ("; ")</option>
+              <option value=" | ">Barra vertical (" | ")</option>
+              <option value=" - ">Guion (" - ")</option>
+              <option value=" / ">Barra (" / ")</option>
+              <option value="&#9;">Tabulación (\t)</option>
+              <option value="__otro">Otro separador personalizado...</option>
+            </select>
+          </div>
+
+          <div class="select-group" id="custom-sep-group" style="display: none;">
+            <label for="otro">Símbolo:</label>
+            <input type="text" id="otro" placeholder="ej: -> o _" aria-label="Separador personalizado">
+          </div>
+        </div>
+
+        <div class="checkboxes-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="espacios">
+            Quitar todos los espacios
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="recortar" checked>
+            Recortar bordes de cada línea
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="vacias" checked>
+            Ignorar líneas vacías
+          </label>
+        </div>
+      </section>
+
+      <!-- Sección Salida -->
+      <section class="card">
+        <div class="section-label">
+          <label for="salida">Resultado en una línea</label>
+          <span class="stats-badge" id="stats-salida" aria-live="polite">0 caracteres • 0 palabras</span>
+        </div>
+        <textarea
+          id="salida"
+          readonly
+          placeholder="Aquí aparecerá el texto convertido en una sola línea listo para copiar..."
+          spellcheck="false"
+        ></textarea>
+
+        <div class="action-buttons">
+          <button id="copiar" class="btn btn-primary" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copiar resultado</span>
+          </button>
+          <button id="intercambiar" class="btn btn-secondary" type="button" title="Usar el resultado como nueva entrada">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Usar como entrada</span>
+          </button>
+          <button id="limpiar" class="btn btn-ghost" type="button">
+            Borrar todo
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Texto en una línea — Desarrollado con TypeScript &amp; Vite.</p>
+      <div class="shortcuts-tip">
+        Tip: Presiona <kbd>Ctrl</kbd> + <kbd>Enter</kbd> (o <kbd>⌘</kbd> + <kbd>Enter</kbd>) para copiar el resultado directamente.
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

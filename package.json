@@ -1,0 +1,16 @@
+{
+  "name": "texto-en-una-linea",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "node --experimental-strip-types --test tests/**/*.test.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0"
+  }
+}
